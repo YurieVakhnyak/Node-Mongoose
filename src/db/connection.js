@@ -1,22 +1,11 @@
-const MongoClient = require("mongodb").MongoClient;
-const collections = {};
-// const collections = require("./collections");
+const mongoose = require("mongoose");
 
 const getCollections = () => {
   return collections;
 };
-// const collections = require("./collections.js");
 
 const connectMongo = async () => {
-  const client = await MongoClient.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  const db = client.db();
-
-  // collections.Posts = db.collection("posts");
-  collections.Posts = db.collection("posts");
-  // return { Posts };
+  return await mongoose.connect(process.env.MONGO_URL);
 };
 
 module.exports = {
