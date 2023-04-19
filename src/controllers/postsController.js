@@ -1,40 +1,48 @@
-const { Post } = require("../db/postModel");
+const {
+  getPosts,
+  getPostById,
+  addPost,
+  changePostById,
+  deletePostById,
+} = require("../services/postsService");
 
-const getPosts = async (req, res) => {
-  const posts = await Post.find({});
+const getPostsController = async (req, res) => {
+  const posts = await getPosts();
   res.json({ posts, status: "success" });
 };
 
-const getPostById = async (req, res) => {
+const getPostByIdController = async (req, res) => {
   const { id } = req.params;
-  const post = await Post.findById(id);
+  const post = await getPostById(id);
   res.json({ post, status: "success" });
 };
 
-const addPost = async (req, res) => {
+const addPostController = async (req, res) => {
   const { topic, text } = req.body;
-  const post = new Post({ topic, text });
-  await post.save();
+  await addPost({ topic, text });
+
   res.json({ status: "success" });
 };
 
-const changePost = async (req, res) => {
+const changePostController = async (req, res) => {
   const { id } = req.params;
   const { topic, text } = req.body;
-  await Post.findByIdAndUpdate(id, { $set: { topic, text } });
+  await changePostById(id, { topic, text });
   res.json({ status: "success" });
 };
 
-const deletePost = async (req, res) => {
+const deletePostController = async (req, res) => {
   const { id } = req.params;
-  await Post.findByIdAndRemove(id);
+
+  await deletePostById(id);
+
   res.json({ status: "success" });
 };
 
 module.exports = {
-  getPosts,
-  getPostById,
-  addPost,
-  changePost,
-  deletePost,
+  getPostsController,
+  getPostByIdController,
+  addPostController,
+  changePostController,
+  deletePostController,
 };

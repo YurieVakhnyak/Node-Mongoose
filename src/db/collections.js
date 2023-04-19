@@ -1,3 +1,0 @@
-module.exorts = {
-  Posts: {},
-};
