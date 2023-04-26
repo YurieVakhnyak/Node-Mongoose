@@ -6,6 +6,10 @@ const postSchema = new mongoose.Schema({
     requared: true,
     unique: true,
   },
+  userId: {
+    type: String,
+    unique: true,
+  },
   text: {
     type: String,
     requared: true,
