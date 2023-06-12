@@ -2,7 +2,8 @@ const { Post } = require("../db/postModel");
 const { WrongParametersError } = require("../helpers/errors");
 
 const getPosts = async (userId) => {
-  const posts = await Post.find({ userId });
+  // const posts = await Post.find({ userId }, "-__v"); exeption of field
+  const posts = await Post.find({ userId }).select({ __v: 0 });
   return posts;
 };
 
