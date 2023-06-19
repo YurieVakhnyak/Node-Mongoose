@@ -2,20 +2,27 @@ const jwt = require("jsonwebtoken");
 const { NotAuthorizedError } = require("../helpers/errors");
 
 const authMiddleware = (req, res, next) => {
-  // TODO: typeToken validation
-  const [, token] = req.headers["authorization"].split(" ");
   try {
-    if (!token) {
-      next(new NotAuthorizedError("Please, provide a token"));
+    const { authorization } = req.headers;
+    if (!authorization) {
+      throw new NotAuthorizedError(
+        "Please, provide a token in the request authorization header"
+      );
     }
-  } catch (err) {
-    next(new NotAuthorizedError("Invalid token"));
-  }
-  const user = jwt.decode(token, process.env.JWT_SECRET);
-  req.token = token;
-  req.user = user;
+    const [, token] = authorization.split(" ");
 
-  next();
+    if (!token) {
+      throw new NotAuthorizedError("Please, provide a token");
+    }
+
+    const user = jwt.decode(token, process.env.JWT_SECRET);
+    req.token = token;
+    req.user = user;
+
+    next();
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = {

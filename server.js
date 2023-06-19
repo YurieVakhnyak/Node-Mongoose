@@ -8,6 +8,7 @@ const app = express();
 const { connectMongo } = require("./src/db/connection");
 const { postRouter } = require("./src/routers/postsRouter.js");
 const { authRouter } = require("./src/routers/authRouter.js");
+const { filesRouter } = require("./src/routers/filesRouter.js");
 const { errorHandler } = require("./src/helpers/apiHelpers");
 
 const PORT = process.env.PORT || 8081;
@@ -17,6 +18,7 @@ app.use(morgan("tiny"));
 
 app.use("/api/posts", postRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/files", filesRouter);
 app.use(errorHandler);
 
 const start = async () => {

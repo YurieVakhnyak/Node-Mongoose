@@ -9,7 +9,9 @@ const {
 const getPostsController = async (req, res) => {
   const { _id: userId } = req.user;
 
-  const { skip = 0, limit = 5 } = req.query;
+  let { skip = 0, limit = 5 } = req.query;
+  limit = parseInt(limit) > 10 ? (limit = 10) : limit;
+  skip = parseInt(skip);
 
   const posts = await getPosts(userId, { skip, limit });
   res.json({ posts, skip, limit, status: "success" });
