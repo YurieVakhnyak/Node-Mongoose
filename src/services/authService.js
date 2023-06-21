@@ -89,7 +89,7 @@ const forgotPassword = async (email) => {
   user.save();
 
   const msg = {
-    to: user.email,
+    to: email,
     from: "yurievakhnyak@gmail.com", // Use the email address or domain you verified above
     subject: "Forgot password",
     text: `Please confirm your email adress POST http://localhost:8081/api/auth/registration_confirmation/${code}`,

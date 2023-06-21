@@ -20,7 +20,7 @@ const registrationConfirmationController = async (req, res) => {
   res.json({ status: "success" });
 };
 
-const forgotPasswordController = async (email) => {
+const forgotPasswordController = async (req, res) => {
   const { email } = req.body;
 
   await forgotPassword(email);
